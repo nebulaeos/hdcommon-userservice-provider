@@ -1,0 +1,37 @@
+server:
+  port: 8089
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.0.98:3306/test_edas?&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: holdtime5350606
+    druid:
+      initial-size: 5                          #初始化连接数
+      min-idle: 5                              #连接池最小空闲
+      max-active: 100                          #连接池最大使用连接数量
+      max-wait: 60000                          #获取连接最大等待时间
+      time-between-eviction-runs-millis: 60000 #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      min-evictable-idle-time-millis: 300000   #配置一个连接在池中最小生存的时间，单位是毫秒
+      validation-query: SELECT 1 FROM DUAL     #测试有效用的SQL Query
+      test-while-idle: true                    #连接空闲时测试是否有效
+      test-on-borrow: false                    #获取连接时测试是否有效
+      test-on-return: false                    #归还连接时是否测试有效
+      pool-prepared-statements: true           #是否开启Statement缓存
+      max-pool-prepared-statement-per-connection-size: 50 #Statement缓存大小
+      filters: stat                                       #监控数据库
+  application:
+    name: hdcommon-userservice-provider
+  cloud:
+    inetutils:
+      preferred-networks:
+      - 172.168
+eureka:
+  client:
+    healthcheck:
+      enable: true
+    service-url: 
+      defaultZone: http://admin:holdtime5350606@peer1:8761/eureka/,http://admin:holdtime5350606@peer2:8762/eureka/
+  instance:
+    prefer-ip-address: true
+mybatis:
+  config-location: classpath:mybatis.xml
